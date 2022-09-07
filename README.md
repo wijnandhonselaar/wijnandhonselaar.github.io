@@ -1,4 +1,4 @@
-# the_open_reaction_gif_library
+# The Open Reaction Gif Library
 A place to store, share and archive reaction gifs
 
 ## Share your reaction gifs
