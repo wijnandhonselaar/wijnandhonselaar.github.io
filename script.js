@@ -53,7 +53,7 @@ function displayResults(results) {
         let res = `
         <div class="name">${item.name}</div>
         <div class="tags">${item.tags}</div>
-        <div class="image"><img alt="${item.name}" src="${item.url}" onClick="copyUrl(${item.url})"></div>`;
+        <div class="image"><img alt="${item.name}" src="${item.url}" onClick="copyUrl('${item.url}')"></div>`;
 
         let itemDiv = document.createElement("div");
         itemDiv.className = "col-12 col-md-4 col-lg-3 result";
