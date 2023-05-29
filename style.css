@@ -1,0 +1,42 @@
+.wrapper {
+
+}
+
+.search {
+    padding: 15px;
+    
+}
+
+.search input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+
+}
+
+.search .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.result {
+}
+
+.result .name {
+    padding: 5% 5% 0% 5%;
+    font-weight: bold;
+}
+
+.result .tags {
+    padding: 0% 5% 0% 5%;
+    font-style: italic;
+}
+
+.image:hover {
+    cursor: pointer;
+}
+
+.image img {
+    position: relative;
+    width: 90%;
+    padding: 5%;
+}
