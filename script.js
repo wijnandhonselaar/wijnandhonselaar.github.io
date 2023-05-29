@@ -1,7 +1,8 @@
 let data = null;
 fetch('./reaction_gifs.json')
     .then((response) => response.json())
-    .then((data) => {
+    .then((json) => {
+        data = json
         // Convert the object into an array
         var valuesArray = Object.values(data);
         // Shuffle the array
