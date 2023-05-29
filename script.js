@@ -1,11 +1,20 @@
 let data = null;
 fetch('./reaction_gifs.json')
     .then((response) => response.json())
-    .then((json) => {
-        console.log(json);
-        data = json;
+    .then((data) => {
+        // Convert the object into an array
+        var valuesArray = Object.values(data);
+        // Shuffle the array
+        var shuffledArray = shuffleArray(valuesArray);
+
+        // Retrieve the first 12 elements
+        var randomValues = shuffledArray.slice(0, 8);
+
+        displayResults(randomValues);
     }
-        );
+    );
+
+
 
 function search() {
     const searchTerm = document.getElementById("searchInput").value.toLowerCase();
@@ -18,7 +27,7 @@ function search() {
         const values = Object.values(item).map(value => value.toString().toLowerCase());
 
         if (values.some(value => value.includes(searchTerm))) {
-        results.push(item);
+            results.push(item);
         }
     }
 
@@ -44,10 +53,21 @@ function displayResults(results) {
         <div class="name">${item.name}</div>
         <div class="tags">${item.tags}</div>
         <div class="image"><img alt="${item.name}" src="${item.url}" onClick="copyUrl(${item.url})"></div>`;
-        
+
         let itemDiv = document.createElement("div");
         itemDiv.className = "col-12 col-md-4 col-lg-3 result";
         itemDiv.innerHTML = res;
         resultsDiv.appendChild(itemDiv);
     }
+}
+
+// Function to shuffle the array using the Fisher-Yates algorithm
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    return array;
 }
