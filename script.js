@@ -1,24 +1,55 @@
 let data = null;
+let results = [];
+let scroll = false;
 fetch('./reaction_gifs.json')
     .then((response) => response.json())
     .then((json) => {
         data = json
         // Convert the object into an array
         var valuesArray = Object.values(data);
+        
+        const currentDate = new Date();
+        const gif_of_day = valuesArray[getRandomKeyForDate(currentDate, valuesArray)];
+        gifOfTheDay(gif_of_day);
         // Shuffle the array
         var shuffledArray = shuffleArray(valuesArray);
 
-        // Retrieve the first 12 elements
-        var randomValues = shuffledArray.slice(0, 8);
+        // // Retrieve the first 12 elements
+        var randomValues = shuffledArray.slice(0, 6);
+        results = results.concat(randomValues);
 
         displayResults(randomValues);
     }
     );
 
+let search_input = document.getElementById('searchInput');
+search_input.addEventListener('keydown', (e) => {
+    if (e.code === "Enter") {
+        search();
+    }
+});
+
+document.addEventListener('scroll', (event) => {
+    if(!scroll) {
+        scroll = true;
+        // document.removeEventListener('scroll');
+
+    }
+});
+
+function getRandomKeyForDate(date, array) {
+    const dateString = date.toDateString();
+    const keyIndex = Math.floor(
+      Array.from(dateString).reduce((acc, char) => acc + char.charCodeAt(0), 0)
+    ) % array.length;
+  
+    return Object.keys(array)[keyIndex];
+  }
+  
 
 
 function search() {
-    const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+    const searchTerm = search_input.value.toLowerCase();
     const results = [];
 
     for (let i = 0; i < data.length; i++) {
@@ -32,6 +63,11 @@ function search() {
         }
     }
 
+    const gif_of_day_el = document.getElementById("gif_of_the_day");
+    if(!gif_of_day_el.className.includes('hidden')) {
+        gif_of_day_el.classList.className = "hidden";
+    }
+
     displayResults(results);
 }
 
@@ -39,27 +75,48 @@ function copyUrl(url) {
     navigator.clipboard.writeText(url)
 }
 
-function displayResults(results) {
-    const resultsDiv = document.getElementById("results");
+function gifOfTheDay(item) {
+    const resultsDiv = document.getElementById("gif_of_the_day");
     resultsDiv.innerHTML = "";
 
+    let itemDiv = document.createElement("div");
+    itemDiv.className = "result-container";
+    itemDiv.innerHTML = itemToResult(item);
+    resultsDiv.appendChild(itemDiv);
+}
+
+function displayResults(results) {
+    const resultsElement = resultsDiv();
+    resultsElement.innerHTML = "";
+
     if (results.length === 0) {
-        resultsDiv.textContent = "No results found.";
+        resultsElement.textContent = "No results found.";
         return;
     }
 
-    for (let i = 0; i < results.length; i++) {
-        const item = results[i];
-        let res = `
-        <div class="name">${item.name}</div>
-        <div class="tags">${item.tags}</div>
-        <div class="image"><img alt="${item.name}" src="${item.url}" onClick="copyUrl('${item.url}')"></div>`;
+    appendReults(resultsElement, results);
+}
 
+function appendReults(resultContainer, items) {
+    for (let i = 0; i < items.length; i++) {
+        const item = items[i];
         let itemDiv = document.createElement("div");
-        itemDiv.className = "col-12 col-md-4 col-lg-3 result";
-        itemDiv.innerHTML = res;
-        resultsDiv.appendChild(itemDiv);
+        itemDiv.className = "col-12 col-md-4 col-lg-3 result-container";
+        itemDiv.innerHTML = itemToResult(item);;
+        resultContainer.appendChild(itemDiv);
     }
+}
+
+let resultsDiv = () => { return document.getElementById("results"); }
+
+function itemToResult(item) {
+    return `<div class="result">
+    <div class="d-flex justify-content-center image">
+    <img alt="${item.name}" src="${item.url}" onClick="copyUrl('${item.url}')">
+    </div>
+    <div class="name">${item.name}</div>
+    <div class="tags hidden">${item.tags}</div>
+    </div>`;
 }
 
 // Function to shuffle the array using the Fisher-Yates algorithm
