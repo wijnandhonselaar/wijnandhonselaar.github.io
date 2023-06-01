@@ -3,13 +3,50 @@ body {
 }
 
 .search-container {
-    background: rgb(2,0,36);
-background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(9,9,121,0.2) 41%, rgba(230,230,230,0.2) 100%);
+    display: block;
+    position: relative;
+}
+
+.search-input {
+  width: 200px;
+  height: 30px;
+  padding: 5px;
+  border: none;
+  background-color: transparent;
+  color: white;
+  outline: none;
+}
+
+span.search-icon-clickable {
+    height: 30px;
+    width: 30px;
+}
+
+span.search-icon-clickable:hover {
+    cursor: pointer;
+}
+
+.search-icon-clickable .search-icon-small {
+  position: relative;
+  transform: translateY(-50%);
+  transform: translate(45%, 25%);
+  color: white;
+}
+span.search-icon-clickable:hover > .search-icon-small {
+    display: none;
+}
+
+.search-icon-clickable .search-icon-large {
+    display: none;
+    color: white;
+}
+
+span.search-icon-clickable:hover > .search-icon-large {
+    display: block;
 }
 
 .search {
     padding: 15px 15px 0 15px;
-    
 }
 
 .sub-header {
