@@ -1,6 +1,7 @@
 let data = null;
 let results = [];
 let scroll = false;
+
 fetch('./reaction_gifs.json')
     .then((response) => response.json())
     .then((json) => {
@@ -63,9 +64,9 @@ function search() {
         }
     }
 
-    const gif_of_day_el = document.getElementById("gif_of_the_day");
+    const gif_of_day_el = document.getElementsByClassName("gif_of_the_day")[0];
     if(!gif_of_day_el.className.includes('hidden')) {
-        gif_of_day_el.classList.className = "hidden";
+        gif_of_day_el.classList.add("hidden");
     }
 
     displayResults(results);
@@ -101,7 +102,7 @@ function appendReults(resultContainer, items) {
     for (let i = 0; i < items.length; i++) {
         const item = items[i];
         let itemDiv = document.createElement("div");
-        itemDiv.className = "col-12 col-md-4 col-lg-3 result-container";
+        itemDiv.className = "col-12 col-lg-3 result-container";
         itemDiv.innerHTML = itemToResult(item);;
         resultContainer.appendChild(itemDiv);
     }
