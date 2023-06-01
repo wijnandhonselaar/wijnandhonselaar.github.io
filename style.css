@@ -2,10 +2,6 @@ body {
     background-color: #000;
 }
 
-.wrapper {
-
-}
-
 .search-container {
     background: rgb(2,0,36);
 background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(9,9,121,0.2) 41%, rgba(230,230,230,0.2) 100%);
