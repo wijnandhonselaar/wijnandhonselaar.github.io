@@ -12,6 +12,7 @@ if(query !== '' && interactive == false) {
 document.addEventListener("DOMContentLoaded", function() {
     
 if(query === '' && interactive)  {
+    search_input.value = query;
 fetch('./reaction_gifs.json')
     .then((response) => response.json())
     .then((json) => {
