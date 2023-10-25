@@ -6,9 +6,9 @@ const queryParams = new URLSearchParams(window.location.search);
 const query = queryParams.get('search') ?? '';
 const interactive = queryParams.get('interactive') ?? true;
 
-if(query !== '' && interactive == false) {
-    return search(query, true);
-}
+// if(query !== '' && interactive == false) {
+//     return search(query, true);
+// }
 document.addEventListener("DOMContentLoaded", function() {
     
 if(query === '' && interactive)  {
