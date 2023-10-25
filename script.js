@@ -2,6 +2,16 @@ let data = null;
 let results = [];
 let scroll = false;
 
+const queryParams = new URLSearchParams(window.location.search);
+const query = queryParams.get('search') ?? '';
+const interactive = queryParams.get('interactive') ?? true;
+
+if(query !== '' && interactive == false) {
+    return search(query, true);
+}
+document.addEventListener("DOMContentLoaded", function() {
+    
+if(query === '' && interactive)  {
 fetch('./reaction_gifs.json')
     .then((response) => response.json())
     .then((json) => {
@@ -22,6 +32,11 @@ fetch('./reaction_gifs.json')
         displayResults(randomValues);
     }
     );
+} else {
+    search(query);
+}
+        });
+
 
 let search_input = document.getElementById('searchInput');
 search_input.addEventListener('keydown', (e) => {
@@ -49,8 +64,8 @@ function getRandomKeyForDate(date, array) {
   
 
 
-function search() {
-    const searchTerm = search_input.value.toLowerCase();
+function search(query = null, json = false) {
+    const searchTerm = query ?? search_input.value.toLowerCase();
     const results = [];
 
     for (let i = 0; i < data.length; i++) {
@@ -62,6 +77,10 @@ function search() {
         if (values.some(value => value.includes(searchTerm))) {
             results.push(item);
         }
+    }
+
+    if(json) {
+        return results;
     }
 
     const gif_of_day_el = document.getElementsByClassName("gif_of_the_day")[0];
