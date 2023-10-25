@@ -11,8 +11,6 @@ const interactive = queryParams.get('interactive') ?? true;
 // }
 document.addEventListener("DOMContentLoaded", function() {
     
-if(query === '' && interactive)  {
-    search_input.value = query;
 fetch('./reaction_gifs.json')
     .then((response) => response.json())
     .then((json) => {
@@ -33,10 +31,7 @@ fetch('./reaction_gifs.json')
         displayResults(randomValues);
     }
     );
-} else {
-    search(query);
-}
-        });
+});
 
 
 let search_input = document.getElementById('searchInput');
@@ -68,7 +63,7 @@ function getRandomKeyForDate(date, array) {
 function search(query = null, json = false) {
     const searchTerm = query ?? search_input.value.toLowerCase();
     const results = [];
-
+    
     for (let i = 0; i < data.length; i++) {
         const item = data[i];
 
